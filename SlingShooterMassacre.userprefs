@@ -1,8 +1,9 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Slingshot.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\FollowCam.cs">
     <Files>
-      <File FileName="Assets\Scripts\Slingshot.cs" Line="79" Column="5" />
+      <File FileName="Assets\Scripts\Slingshot.cs" Line="84" Column="32" />
+      <File FileName="Assets\Scripts\FollowCam.cs" Line="32" Column="84" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
