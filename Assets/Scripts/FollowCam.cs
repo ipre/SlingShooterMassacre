@@ -5,13 +5,18 @@ public class FollowCam : MonoBehaviour {
 
 	public GameObject poi;
 	public static FollowCam S; //Singleton FollowCam instance
-	private Vector3 velocity = Vector3.zero;
+	//private Vector3 velocity = Vector3.zero;
+
 	private float CamZ;
 	public float zoom = 1;
+	public float easing = 0.05f;
+
+	public Vector2 minXY;
 
 	void Awake() {
 		S = this;
-		CamZ = transform.position.z-200;
+		CamZ = transform.position.z;
+
 	}
 
 	void FixedUpdate() {
@@ -20,17 +25,20 @@ public class FollowCam : MonoBehaviour {
 		}
 
 		if ( poi != null ){
+
 		Vector3 destination = poi.transform.position;
 		destination.z = CamZ;
-			zoom+=0.05f;
+		destination.x = Mathf.Max(minXY.x, destination.x);
+	
+		destination.y = Mathf.Max(minXY.y, destination.y);
+		
 		//transform.position = destination;
 		//transform.position = Vector3.SmoothDamp(transform.position,destination,ref velocity,0.9f);
-		transform.position = Vector3.Lerp (transform.position, destination, 0.05f);
+		transform.position = Vector3.Lerp (transform.position, destination, easing);
 
-			this.GetComponent<Camera>().orthographicSize= Mathf.Lerp (10,20,Mathf.Sin(zoom));
+		this.GetComponent<Camera>().orthographicSize = 10 + destination.y;
 
-			//modeling clouds and background assets  +  size + max y so u dont see under map
-
+		this.GetComponent<Camera>().orthographicSize = 10 + transform.position.y;
 		}
 	}
 }
