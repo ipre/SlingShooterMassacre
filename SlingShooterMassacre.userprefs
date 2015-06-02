@@ -1,10 +1,10 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\CloudCrafter.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\FollowCam.cs">
     <Files>
-      <File FileName="Assets\Scripts\FollowCam.cs" Line="23" Column="22" />
+      <File FileName="Assets\Scripts\CloudCrafter.cs" Line="38" Column="49" />
+      <File FileName="Assets\Scripts\FollowCam.cs" Line="20" Column="54" />
       <File FileName="Assets\Scripts\Slingshot.cs" Line="48" Column="41" />
-      <File FileName="Assets\Scripts\CloudCrafter.cs" Line="44" Column="36" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

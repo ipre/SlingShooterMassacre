@@ -10,23 +10,31 @@ public class FollowCam : MonoBehaviour {
 	private float CamZ;
 	public float zoom = 1;
 	public float easing = 0.05f;
-
+	public GameObject startPos;
 	public Vector2 minXY;
+
 
 	void Awake() {
 		S = this;
 		CamZ = transform.position.z;
-
+		GameObject startPos = GameObject.Find("Slingshot");
 	}
 
 	void FixedUpdate() {
-		if ( poi == null ){
-			return;
+		if(poi == null){
+			poi=startPos;
+			print ("reset");
 		}
-
-		if ( poi != null ){
+		if(poi!=null){
 
 		Vector3 destination = poi.transform.position;
+			if(poi.CompareTag("Projectile")){
+				if(poi.GetComponent<Rigidbody>().IsSleeping()){
+				poi = null;
+				print ("sleep");
+				}
+			}
+
 		destination.z = CamZ;
 		destination.x = Mathf.Max(minXY.x, destination.x);
 	
@@ -39,6 +47,7 @@ public class FollowCam : MonoBehaviour {
 		this.GetComponent<Camera>().orthographicSize = 10 + destination.y;
 
 		this.GetComponent<Camera>().orthographicSize = 10 + transform.position.y;
+			print ("movecam");
 		}
 	}
 }
