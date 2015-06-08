@@ -23,13 +23,13 @@ public class Slingshot : MonoBehaviour {
 	}
 
 	void OnMouseEnter(){
-		print ("Slingshot:Enter");	
+		//print ("Slingshot:Enter");	
 		launchPoint.SetActive (true);
 	//	launchPoint.transform.position = Input.mousePosition
 	}
 
 	void OnMouseExit(){
-		print ("Slingshot:Exit");
+		//print ("Slingshot:Exit");
 		launchPoint.SetActive (false);
 	}
 
