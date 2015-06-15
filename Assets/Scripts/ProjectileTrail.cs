@@ -2,9 +2,9 @@
 using System.Collections;
 
 public class ProjectileTrail : MonoBehaviour {
-	public static ProjectileTrail S;
 
-	public float minDistance = 0.1f;
+	public static ProjectileTrail S;
+	public float minDist = 0.1f;
 
 	private LineRenderer line;
 
@@ -13,6 +13,7 @@ public class ProjectileTrail : MonoBehaviour {
 	private Vector3 lastPoint;
 
 	private int pointsCount;
+
 
 	public GameObject poi {
 		get{
@@ -25,6 +26,11 @@ public class ProjectileTrail : MonoBehaviour {
 			//check if the poi is set to something and now to something new
 
 			// reset the whole linerenderer thingy
+			if(poi!= null) { 
+				line.enabled = false;
+				pointsCount = 0;
+				line.SetVertexCount (0);
+			}
 		}
 	}
 
@@ -33,6 +39,9 @@ public class ProjectileTrail : MonoBehaviour {
 		line = GetComponent<LineRenderer>();
 
 		//intitialize stuff
+		pointsCount = 0;
+		line.enabled = false;
+
 	}
 
 	void FixedUpdate() {
@@ -46,9 +55,22 @@ public class ProjectileTrail : MonoBehaviour {
 		AddPoint();
 	}
 
-	void AddPoint(){
+	public void AddPoint(){
 		Vector3 pt = _poi.transform.position;
 
+		if(pointsCount > 0 && ( pt - lastPoint).magnitude < minDist) {
+			return;
+		}
+
+		if(pointsCount == 0){
+			line.enabled = true;
+		}
+
+		pointsCount++;
+		line.SetVertexCount(pointsCount);
+		line.SetPosition(pointsCount - 1,pt);
+
+		lastPoint = pt;
 		//if the point isnt far enough from the last point do nothing
 
 		// if out curent point is the first point ( launch ); add first point
