@@ -76,7 +76,7 @@ public class Slingshot : MonoBehaviour {
 			cannonActive = true;
 			launchPoint.SetActive ( true ) ;
 			// Get mouse position and convert to 3d
-			cannonShape.SetBlendShapeWeight(0, Mathf.Lerp (cannonShape.GetBlendShapeWeight(0),blend*30f,0.35f));
+			cannonShape.SetBlendShapeWeight(0, Mathf.Lerp (cannonShape.GetBlendShapeWeight(0),blend*35f,0.35f));
 			cannon.transform.rotation = Quaternion.Euler (0,0,cannonRot);
 			// Calculate the delata between launch position and mouse position
 
