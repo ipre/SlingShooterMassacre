@@ -23,24 +23,26 @@ public class FollowCam : MonoBehaviour {
 
 	void FixedUpdate() {
 
+		Vector3 destination = poi.transform.position;
 
-
-		if(poi == null){
-			print ("reset");
-			print (startPos);
+		if(poi.CompareTag("Slingshot")){
+			destination = startPos.transform.position;
 			//transform.position = startPos.transform.position;
-			return;
+
 		}
 
 		else{
 			
 		if(poi.CompareTag("Projectile")){
+				destination = poi.transform.position;
 			if(poi.GetComponent<Rigidbody>().IsSleeping()){
-				poi = startPos;
+					poi = startPos;
+					//destination = startPos.transform.position;
 				print ("sleep");
+
 				}
 			}
-		Vector3 destination = poi.transform.position;
+		
 		destination.z = CamZ;
 		destination.x = Mathf.Max(minXY.x, destination.x);
 		destination.y = Mathf.Max(minXY.y, destination.y);

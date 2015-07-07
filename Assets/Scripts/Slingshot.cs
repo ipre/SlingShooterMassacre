@@ -72,7 +72,6 @@ public class Slingshot : MonoBehaviour {
 
 		if(aimingMode){
 			float blend = mouseDelta.magnitude - 2f;
-			print (blend);
 			cannonActive = true;
 			launchPoint.SetActive ( true ) ;
 			// Get mouse position and convert to 3d
@@ -104,7 +103,7 @@ public class Slingshot : MonoBehaviour {
 		projectile.GetComponent<Rigidbody>().isKinematic = false; 
 
 		//projectile.GetComponent<Rigidbody>().AddForce(-mouseDelta*1000);
-		projectile.GetComponent<Rigidbody>().velocity = mouseDelta * 5;
+		projectile.GetComponent<Rigidbody>().velocity = mouseDelta * 3;
 
 		FollowCam.S.poi = projectile;
 	}

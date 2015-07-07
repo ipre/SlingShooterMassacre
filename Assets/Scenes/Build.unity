@@ -1678,12 +1678,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numClouds: 40
-  cloudPosMin: {x: -20, y: 5, z: 0}
-  cloudPosMax: {x: 40, y: 40, z: 0}
-  cloudScaleMin: .5
+  cloudPosMin: {x: 0, y: 0, z: 0}
+  cloudPosMax: {x: 0, y: 0, z: 0}
+  cloudScaleMin: 1
   cloudScaleMax: 5
   cloudSpeedMult: .5
-  CloudAnchor: {fileID: 1669957100}
+  CloudAnchor: {fileID: 0}
   CloudPrefabs:
   - {fileID: 128238, guid: 9812f37996de043e9bcc713c10d57bce, type: 2}
   - {fileID: 149086, guid: d164670d170d2495fac4b1e6e50267d2, type: 2}
