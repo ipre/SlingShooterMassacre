@@ -87,9 +87,8 @@ public class Slingshot : MonoBehaviour {
 			// Set projectile position to new position and fire it
 			projectile.transform.position = launchPos + mouseDelta;
 		}
-		
+		//blendshape calculation based on mouse position
 		else if(cannonActive){
-			//cannonShape.SetBlendShapeWeight(0, Mathf.Lerp (cannonShape.GetBlendShapeWeight(0),30f,0.15f));
 			cannon.transform.rotation = Quaternion.Lerp (cannon.transform.rotation,Quaternion.Euler(0,0,cannonRot),0.1f);
 		}else{
 			cannonShape.SetBlendShapeWeight(0, Mathf.Lerp (cannonShape.GetBlendShapeWeight(0),0f,0.15f));
@@ -101,10 +100,9 @@ public class Slingshot : MonoBehaviour {
 		aimingMode=false;
 		cannonActive = false;
 		projectile.GetComponent<Rigidbody>().isKinematic = false; 
-
 		//projectile.GetComponent<Rigidbody>().AddForce(-mouseDelta*1000);
 		projectile.GetComponent<Rigidbody>().velocity = mouseDelta * 3;
-
 		FollowCam.S.poi = projectile;
+		GameController.ShotFired();
 	}
 }

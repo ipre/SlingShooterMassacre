@@ -13,6 +13,8 @@ public class FollowCam : MonoBehaviour {
 	public Vector2 minXY;
 
 	private GameObject startPos;
+	Vector3 destination;
+	float timer=0.0f;
 
 
 	void Awake() {
@@ -21,28 +23,34 @@ public class FollowCam : MonoBehaviour {
 		startPos = GameObject.FindGameObjectWithTag("Slingshot");
 	}
 
-	void FixedUpdate() {
+	void FixedUpdate() {	
 
-		Vector3 destination = poi.transform.position;
+		// Check if the poi exists
+		if(poi == null) {
+			timer+= 1.0f * Time.deltaTime;
+			// set the destination to the slingshot (zero  vector)
+			//after a delay of 1.5seconds
+			if(timer>1.0f)
+				destination = Vector3.zero;
+		} else {
 
-		if(poi.CompareTag("Slingshot")){
-			destination = startPos.transform.position;
-			//transform.position = startPos.transform.position;
-
+			// else (there is a poi)			
+			destination = poi.transform.position;
+			
+			// is the poi a projectile ?
+			if(poi.tag == "Projectile") {
+				timer = 0;
+				// check if it is resting (sleeping)
+				if(poi.GetComponent<Rigidbody>().IsSleeping()  ){
+					
+					// set the poi to default (null)
+					poi = null;
+					return;
+				}
+				
+			}
 		}
 
-		else{
-			
-		if(poi.CompareTag("Projectile")){
-				destination = poi.transform.position;
-			if(poi.GetComponent<Rigidbody>().IsSleeping()){
-					poi = startPos;
-					//destination = startPos.transform.position;
-				print ("sleep");
-
-				}
-			}
-		
 		destination.z = CamZ;
 		destination.x = Mathf.Max(minXY.x, destination.x);
 		destination.y = Mathf.Max(minXY.y, destination.y);
@@ -52,7 +60,9 @@ public class FollowCam : MonoBehaviour {
 		transform.position = Vector3.Lerp (transform.position, destination, easing);
 		this.GetComponent<Camera>().orthographicSize = 10 + destination.y;
 		this.GetComponent<Camera>().orthographicSize = 10 + transform.position.y;
-		}
 	}
 
 }
+
+
+

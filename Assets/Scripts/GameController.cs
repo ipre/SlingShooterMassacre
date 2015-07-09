@@ -23,11 +23,8 @@ public class GameController : MonoBehaviour {
 	//internal fields
 	private int level;
 	private int levelMax;
-
 	private int shotsTaken;
-
 	private GameObject castle;
-
 	private string showing = "Slingshot";
 
 	private GameState state = GameState.idle;
@@ -42,33 +39,83 @@ public class GameController : MonoBehaviour {
 		StartLevel();
 	
 	}
+	
+	void Update() {
+		UpdateGT();
+		
+		// Check for level end
+		if(state == GameState.playing && Goal.goalMet) {
+			if(FollowCam.S.poi.tag == "Projectile" &&  FollowCam.S.poi.GetComponent<Rigidbody>().IsSleeping()) {
+				// Change state to stop checking for level end
+				state = GameState.levelEnd;
+				// Zoom out
+				SwitchView("Both");
+				// Start next level in 2 seconds
+				Invoke("NextLevel", 2f);
+			}
+		}
+	}
 
+	void UpdateGT() {
+		gtLevel.text = "Level:" + (level+1) + " of " + levelMax;
+		gtShots.text = "Shots Taken: " + shotsTaken;
+	}
 
-	public void Update() {
-		//update gui text
-
-		// check for lvl end
+	public void SwitchView(string view) {
+		S.showing = view;
+		switch(S.showing){
+		case "Slingshot":
+			FollowCam.S.poi = null;
+			break;
+		case "Castle":
+			FollowCam.S.poi = S.castle;
+			break;
+		case "Both":
+			FollowCam.S.poi = GameObject.Find ("ViewBoth");
+			break;
+		}
 	}
 
 
-	public void SwitchView(string view){
-		print (view);
-
-		//switch over all possibilities slingshot/both/castles
-
-		//set the followcams POI to the according value
-
+	void StartLevel() {
+		// If a castle exists, get rid of it
+		if(castle != null) {
+			Destroy (castle);
+		}
+		
+		// Destroy the old projectiles
+		GameObject[] projectiles = GameObject.FindGameObjectsWithTag("Projectile");
+		foreach(GameObject p in projectiles){
+			Destroy(p);
+		}
+		
+		// Instantiate the new castle
+		castle = Instantiate (castles[level]) as GameObject;
+		castle.transform.position = castlePos;
+		shotsTaken = 0;
+		
+		// Reset the camera
+		SwitchView("Both");
+		//ProjectileLine.S.Clear();
+		
+		// Reset the Goal
+		Goal.goalMet = false;
+		UpdateGT();
+		
+		state = GameState.playing;
+		
 	}
 
-
-	public void StartLevel(){
-		// if there is a castle, destroy it
-		//destroy all remaining projectiles
-		//instantiate a new castle
-
-		//switch view to both
-		//clear all projectile lines(trail)
+	void NextLevel() {
+		level++;
+		if(level == levelMax){
+			level = 0;
+		}
+		StartLevel();
 	}
-
-
+		
+	// Static function that allows to increment the score
+	public static void ShotFired(){
+		S.shotsTaken++;
+	}
 }

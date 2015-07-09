@@ -5,6 +5,9 @@ public class Bullet : MonoBehaviour {
 
 	Rigidbody rb;
 	MeshRenderer mr;
+	public ParticleSystem boom;
+	Quaternion vel = Quaternion.Euler(0,0,-90);
+	Quaternion adj = Quaternion.Euler(0,0,90);
 
 	// Use this for initialization
 	void Awake () {
@@ -15,7 +18,6 @@ public class Bullet : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if(rb.velocity.magnitude > 1.0f){
-			Quaternion vel = Quaternion.Euler(0,0,-90);
 			transform.rotation= vel*Quaternion.LookRotation(rb.velocity);
 		}
 	}
@@ -23,7 +25,8 @@ public class Bullet : MonoBehaviour {
 	void OnCollisionEnter () {
 		rb.Sleep();
 		//mr.enabled = false;
-		Destroy (gameObject,0.2f);
+		Instantiate(boom, transform.position, adj*transform.rotation);
+		Destroy (gameObject);
 
 	}
 }
