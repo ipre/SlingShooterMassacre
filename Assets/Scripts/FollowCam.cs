@@ -7,49 +7,62 @@ public class FollowCam : MonoBehaviour {
 	public static FollowCam S; //Singleton FollowCam instance
 	//private Vector3 velocity = Vector3.zero;
 
+	public Vector3 destination;
 	private float CamZ;
+
 	public float zoom = 1;
 	public float easing = 0.05f;
 	public Vector2 minXY;
 
-	private GameObject startPos;
-	Vector3 destination;
-	float timer=0.0f;
+	//delay until camera changes targets
+	private float timer=0.0f;
+
+	//camera shake
+	private static float shake;
+	public float shakeAmount = 2.5f;
+	public float decreaseFactor = 2.0f;
 
 
 	void Awake() {
 		S = this;
 		CamZ = transform.position.z;
-		startPos = GameObject.FindGameObjectWithTag("Slingshot");
 	}
 
 	void FixedUpdate() {	
 
-		// Check if the poi exists
-		if(poi == null) {
-			timer+= 1.0f * Time.deltaTime;
-			// set the destination to the slingshot (zero  vector)
-			//after a delay of 1.5seconds
-			if(timer>1.0f)
-				destination = Vector3.zero;
+		if (shake > 0) {
+			S.transform.localPosition = new Vector3 (transform.localPosition.x + Random.insideUnitCircle.x * shakeAmount,S.transform.localPosition.y + Random.insideUnitCircle.y * shakeAmount, transform.position.z) ;
+			shake -= Time.deltaTime * decreaseFactor;
 		} else {
-
-			// else (there is a poi)			
-			destination = poi.transform.position;
-			
-			// is the poi a projectile ?
-			if(poi.tag == "Projectile") {
-				timer = 0;
-				// check if it is resting (sleeping)
-				if(poi.GetComponent<Rigidbody>().IsSleeping()  ){
-					
-					// set the poi to default (null)
-					poi = null;
-					return;
-				}
-				
-			}
+			shake = 0.0f;
 		}
+			// Check if the poi exists
+			if(poi == null) {
+				timer+= 1.0f * Time.deltaTime;
+				// set the destination to the slingshot (zero  vector)
+				//delay for camera switch
+				if(timer>1.0f){
+					destination = Vector3.zero;
+				}
+
+			} else {
+
+				// else (there is a poi)			
+				destination = poi.transform.position;
+				
+				// is the poi a projectile ?
+				if(poi.tag == "Projectile") {
+					timer = 0;
+					// check if it is resting (sleeping)
+					if(poi.GetComponent<Rigidbody>().IsSleeping()  ){
+						
+						// set the poi to default (null)
+						poi = null;
+						return;
+					}
+				
+				}
+			}
 
 		destination.z = CamZ;
 		destination.x = Mathf.Max(minXY.x, destination.x);
@@ -62,6 +75,9 @@ public class FollowCam : MonoBehaviour {
 		this.GetComponent<Camera>().orthographicSize = 10 + transform.position.y;
 	}
 
+	public static void Shake(float init){
+		shake = .25f;
+	}
 }
 
 

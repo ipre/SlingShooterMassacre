@@ -15,10 +15,15 @@ public class Slingshot : MonoBehaviour {
 	private GameObject projectile;
 	private Vector3 launchPos;
 
+	//blendshape
 	private GameObject cannon;
 	private SkinnedMeshRenderer cannonShape;
 	private float cannonLerp;
 	private bool cannonActive;
+
+	//audio
+	private AudioSource source;
+	public AudioClip ShootAudio;
 
 	void Awake(){
 		Transform launchPointTrans = transform.Find ("Launchpoint");
@@ -27,6 +32,7 @@ public class Slingshot : MonoBehaviour {
 		launchPos = launchPointTrans.position;
 		cannon = GameObject.Find("cannon");
 		cannonShape = cannon.GetComponent<SkinnedMeshRenderer>();
+		source = GetComponent<AudioSource> ();
 	}
 
 	void OnMouseEnter(){
@@ -54,6 +60,7 @@ public class Slingshot : MonoBehaviour {
 
 		// Turn off physics for aiming mode	
 		projectile.GetComponent<Rigidbody>().isKinematic = true; 
+		projectile.GetComponent<MeshRenderer> ().enabled = false;
 
 		// Set position of projectile to mousePosition
 		projectile.transform.position = launchPos;
@@ -99,10 +106,13 @@ public class Slingshot : MonoBehaviour {
 	void OnMouseUp () {
 		aimingMode=false;
 		cannonActive = false;
+		projectile.GetComponent<MeshRenderer> ().enabled = true;
 		projectile.GetComponent<Rigidbody>().isKinematic = false; 
 		//projectile.GetComponent<Rigidbody>().AddForce(-mouseDelta*1000);
-		projectile.GetComponent<Rigidbody>().velocity = mouseDelta * 3;
+		projectile.GetComponent<Rigidbody>().velocity = mouseDelta * 10;
 		FollowCam.S.poi = projectile;
+		FollowCam.Shake (.4f);
 		GameController.ShotFired();
+		source.PlayOneShot (ShootAudio);
 	}
 }
