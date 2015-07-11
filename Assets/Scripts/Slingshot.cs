@@ -109,10 +109,11 @@ public class Slingshot : MonoBehaviour {
 		projectile.GetComponent<MeshRenderer> ().enabled = true;
 		projectile.GetComponent<Rigidbody>().isKinematic = false; 
 		//projectile.GetComponent<Rigidbody>().AddForce(-mouseDelta*1000);
-		projectile.GetComponent<Rigidbody>().velocity = mouseDelta * 10;
+		projectile.GetComponent<Rigidbody>().velocity = mouseDelta * 5;
 		FollowCam.S.poi = projectile;
-		FollowCam.Shake (.4f);
 		GameController.ShotFired();
+		//added code
 		source.PlayOneShot (ShootAudio);
+		FollowCam.Shake (.4f);
 	}
 }

@@ -33,36 +33,43 @@ public class FollowCam : MonoBehaviour {
 		if (shake > 0) {
 			S.transform.localPosition = new Vector3 (transform.localPosition.x + Random.insideUnitCircle.x * shakeAmount,S.transform.localPosition.y + Random.insideUnitCircle.y * shakeAmount, transform.position.z) ;
 			shake -= Time.deltaTime * decreaseFactor;
+
 		} else {
 			shake = 0.0f;
 		}
-			// Check if the poi exists
-			if(poi == null) {
-				timer+= 1.0f * Time.deltaTime;
-				// set the destination to the slingshot (zero  vector)
-				//delay for camera switch
-				if(timer>1.0f){
-					destination = Vector3.zero;
-				}
+			
+		// Check if the poi exists
+		if (poi == null) {
+			destination = Vector3.zero;	
+			/* 
+			//set the destination to the slingshot (zero  vector)
+			//delay for camera switch - not used anymore
+			timer+= 1.0f * Time.deltaTime;
+			if(timer>1.0f){
+ 			}
+			*/
+		} else {
 
-			} else {
+			// else (there is a poi)			
+			destination = poi.transform.position;
+		}	
+			// is the poi a projectile ? - not needed anymore
+			/*
+			 * if(poi.tag == "Projectile") {
+			 * 
+				//timer = 0;
+					
+				 check if it is resting (sleeping) - no need since projectile destroy themselves
+				if(poi.GetComponent<Rigidbody>().IsSleeping()  ){
 
-				// else (there is a poi)			
-				destination = poi.transform.position;
-				
-				// is the poi a projectile ?
-				if(poi.tag == "Projectile") {
-					timer = 0;
-					// check if it is resting (sleeping)
-					if(poi.GetComponent<Rigidbody>().IsSleeping()  ){
-						
-						// set the poi to default (null)
-						poi = null;
-						return;
+					// set the poi to default (null) - destroy themselves = null
+					poi = null;
+					return;
 					}
 				
 				}
-			}
+		 		*/
+			
 
 		destination.z = CamZ;
 		destination.x = Mathf.Max(minXY.x, destination.x);

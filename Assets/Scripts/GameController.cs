@@ -45,14 +45,15 @@ public class GameController : MonoBehaviour {
 		
 		// Check for level end
 		if(state == GameState.playing && Goal.goalMet) {
-			if(FollowCam.S.poi.tag == "Projectile" &&  FollowCam.S.poi.GetComponent<Rigidbody>().IsSleeping()) {
+			//if(FollowCam.S.poi.tag == "Projectile" &&  FollowCam.S.poi.GetComponent<Rigidbody>().IsSleeping()) {
 				// Change state to stop checking for level end
 				state = GameState.levelEnd;
 				// Zoom out
 				SwitchView("Both");
 				// Start next level in 2 seconds
 				Invoke("NextLevel", 2f);
-			}
+				print ("ttttt");
+			//}
 		}
 	}
 
