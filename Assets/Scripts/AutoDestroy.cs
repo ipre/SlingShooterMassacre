@@ -5,13 +5,12 @@ public class AutoDestroy : MonoBehaviour {
 
 	private ParticleSystem ps;
 
-
 	//put audio here due to destroy() in bullet script
 	private AudioSource source;
 	public AudioClip explosion;
 
 	//explosion
-	public float radius = 15.0f;
+	public float radius = 10.0f;
 	public float power = 600.0f;
 
 	void Awake () {

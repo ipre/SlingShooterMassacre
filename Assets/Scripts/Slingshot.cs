@@ -5,6 +5,7 @@ public class Slingshot : MonoBehaviour {
 
 	// Inspector variable
 	public GameObject prefabProjectile;
+    public float power;
 
 	// Internal state variable
 	private GameObject launchPoint;
@@ -61,7 +62,7 @@ public class Slingshot : MonoBehaviour {
 		// Turn off physics for aiming mode	
 		projectile.GetComponent<Rigidbody>().isKinematic = true; 
 		projectile.GetComponent<MeshRenderer> ().enabled = false;
-
+        projectile.GetComponent<TrailRenderer>().enabled = false;
 		// Set position of projectile to mousePosition
 		projectile.transform.position = launchPos;
 	}
@@ -106,10 +107,11 @@ public class Slingshot : MonoBehaviour {
 	void OnMouseUp () {
 		aimingMode=false;
 		cannonActive = false;
+        projectile.GetComponent<TrailRenderer>().enabled = true;
 		projectile.GetComponent<MeshRenderer> ().enabled = true;
 		projectile.GetComponent<Rigidbody>().isKinematic = false; 
 		//projectile.GetComponent<Rigidbody>().AddForce(-mouseDelta*1000);
-		projectile.GetComponent<Rigidbody>().velocity = mouseDelta * 5;
+		projectile.GetComponent<Rigidbody>().velocity = mouseDelta * power;
 		FollowCam.S.poi = projectile;
 		GameController.ShotFired();
 		//added code

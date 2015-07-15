@@ -12,7 +12,6 @@ public class CloudCrafter : MonoBehaviour {
 	public float cloudScaleMax = 5.0f;
 
 	public float cloudSpeedMult = 0.5f;
-	public GameObject CloudAnchor;
 
 	public GameObject[] CloudPrefabs;
 
@@ -70,12 +69,12 @@ public class CloudCrafter : MonoBehaviour {
 			float scaleVal = cloud.transform.localScale.x;
 			Vector3 cPos = cloud.transform.position;
 
-			cPos.x -= Time.deltaTime * cloudSpeedMult * scaleVal;
+			cPos.x += Time.deltaTime * cloudSpeedMult * scaleVal;
 		// Check if cloud x pos is too small - if it is set it to maximum x pos
-			if(cPos.x < cloudPosMin.x){
-				cPos.x = cloudPosMax.x;
+			if(cPos.x > cloudPosMax.x){
+				cPos.x = cloudPosMin.x;
 			}
-			//cloud.transform.position = cPos;
+			cloud.transform.position = cPos;
 		}
 	}
 }
