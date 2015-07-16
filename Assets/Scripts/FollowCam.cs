@@ -15,12 +15,12 @@ public class FollowCam : MonoBehaviour {
 	public Vector2 minXY;
 
 	//delay until camera changes targets
-	private float timer=0.0f;
+	//private float timer=0.0f;
 
 	//camera shake
 	private static float shake;
-	public float shakeAmount = 2.5f;
-	public float decreaseFactor = 2.0f;
+	public float shakeAmount = 3.5f;
+	public float decreaseFactor = 1.5f;
 
 
 	void Awake() {
@@ -83,7 +83,7 @@ public class FollowCam : MonoBehaviour {
 	}
 
 	public static void Shake(float init){
-		shake = .25f;
+		shake = .35f;
 	}
 }
 

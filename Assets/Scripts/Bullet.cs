@@ -16,7 +16,6 @@ public class Bullet : MonoBehaviour {
 
 	void Awake () {
 		rb = this.GetComponent<Rigidbody>();
-		mr = this.GetComponent<MeshRenderer>();
 
 	}
 
@@ -24,14 +23,13 @@ public class Bullet : MonoBehaviour {
 		transform.rotation = Quaternion.LookRotation(rb.velocity)*Quaternion.Euler(-90,0,180);
 	}
 
-	void OnCollisionEnter (Collision other) {
-		if (other.gameObject.tag != "Slingshot") {
-			rb.Sleep ();
-			//mr.enabled = false;
-			boom = Instantiate (explosion, transform.position, Quaternion.Euler (0, 0, 180) * transform.rotation) as GameObject; //adj*transform.rotation);
-			FollowCam.Shake (.3f);
-			FollowCam.S.poi = boom;
-			Destroy (gameObject);
-		}
-	}
+    void OnCollisionEnter (Collision other) {
+        if (other.gameObject.tag != "Slingshot") {
+            boom = Instantiate (explosion, transform.position, Quaternion.Euler (0, 0, 180)*transform.rotation) as GameObject; //adj*transform.rotation);
+            FollowCam.Shake (.6f);
+            FollowCam.S.poi = boom;
+            print("destroy");
+            Destroy (gameObject);
+        }
+    }
 }

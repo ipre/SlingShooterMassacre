@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Parallax : MonoBehaviour {
 
-         private Camera camera;
+        public Camera camera;
         private Vector3 previousCameraTransform;
         public float parallaxV;
 

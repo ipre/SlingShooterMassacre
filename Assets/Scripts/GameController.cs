@@ -78,7 +78,7 @@ public class GameController : MonoBehaviour {
 	}
 
 
-	void StartLevel() {
+	public void StartLevel() {
 		// If a castle exists, get rid of it
 		if(castle != null) {
 			Destroy (castle);
@@ -119,4 +119,14 @@ public class GameController : MonoBehaviour {
 	public static void ShotFired(){
 		S.shotsTaken++;
 	}
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
+
+    public void ToggleAudio()
+    {
+        Camera.main.GetComponent<AudioListener>().enabled = !Camera.main.GetComponent<AudioListener>().enabled;
+    }
 }

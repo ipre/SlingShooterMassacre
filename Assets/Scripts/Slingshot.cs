@@ -6,6 +6,7 @@ public class Slingshot : MonoBehaviour {
 	// Inspector variable
 	public GameObject prefabProjectile;
     public float power;
+    public AimSystem aimSys;
 
 	// Internal state variable
 	private GameObject launchPoint;
@@ -26,6 +27,8 @@ public class Slingshot : MonoBehaviour {
 	private AudioSource source;
 	public AudioClip ShootAudio;
 
+    
+
 	void Awake(){
 		Transform launchPointTrans = transform.Find ("Launchpoint");
 		launchPoint = launchPointTrans.gameObject;
@@ -34,6 +37,7 @@ public class Slingshot : MonoBehaviour {
 		cannon = GameObject.Find("cannon");
 		cannonShape = cannon.GetComponent<SkinnedMeshRenderer>();
 		source = GetComponent<AudioSource> ();
+  
 	}
 
 	void OnMouseEnter(){
@@ -94,6 +98,9 @@ public class Slingshot : MonoBehaviour {
 
 			// Set projectile position to new position and fire it
 			projectile.transform.position = launchPos + mouseDelta;
+
+            //Linerenderer
+            aimSys.UpdateTraj(mouseDelta * power, launchPos+mouseDelta);
 		}
 		//blendshape calculation based on mouse position
 		else if(cannonActive){
@@ -116,6 +123,10 @@ public class Slingshot : MonoBehaviour {
 		GameController.ShotFired();
 		//added code
 		source.PlayOneShot (ShootAudio);
-		FollowCam.Shake (.4f);
+		FollowCam.Shake (.8f);
 	}
+
+    public Vector3 getVelocity(){
+        return mouseDelta*power;
+    }
 }
