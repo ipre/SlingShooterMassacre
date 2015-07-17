@@ -127,6 +127,7 @@ public class GameController : MonoBehaviour {
 
     public void ToggleAudio()
     {
-        Camera.main.GetComponent<AudioListener>().enabled = !Camera.main.GetComponent<AudioListener>().enabled;
+        //Camera.main.GetComponent<AudioListener>().enabled = !Camera.main.GetComponent<AudioListener>().enabled;
+        GetComponent<AudioSource>().mute = !GetComponent<AudioSource>().mute;
     }
 }

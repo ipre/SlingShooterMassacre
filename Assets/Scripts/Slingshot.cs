@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class Slingshot : MonoBehaviour {
 
 	// Inspector variable
 	public GameObject prefabProjectile;
-    public float power;
+    public float power=5;
     public AimSystem aimSys;
 
 	// Internal state variable
@@ -26,6 +27,12 @@ public class Slingshot : MonoBehaviour {
 	//audio
 	private AudioSource source;
 	public AudioClip ShootAudio;
+
+    //Gamecontroller
+    public GameController gc;
+
+    //Slider
+    public Slider sl;
 
     
 
@@ -69,6 +76,7 @@ public class Slingshot : MonoBehaviour {
         projectile.GetComponent<TrailRenderer>().enabled = false;
 		// Set position of projectile to mousePosition
 		projectile.transform.position = launchPos;
+        gc.SwitchView("Both");
 	}
 
 
@@ -100,7 +108,7 @@ public class Slingshot : MonoBehaviour {
 			projectile.transform.position = launchPos + mouseDelta;
 
             //Linerenderer
-            aimSys.UpdateTraj(mouseDelta * power, launchPos+mouseDelta);
+            aimSys.UpdateTraj(mouseDelta * power, launchPos+mouseDelta,power);
 		}
 		//blendshape calculation based on mouse position
 		else if(cannonActive){
@@ -118,7 +126,7 @@ public class Slingshot : MonoBehaviour {
 		projectile.GetComponent<MeshRenderer> ().enabled = true;
 		projectile.GetComponent<Rigidbody>().isKinematic = false; 
 		//projectile.GetComponent<Rigidbody>().AddForce(-mouseDelta*1000);
-		projectile.GetComponent<Rigidbody>().velocity = mouseDelta * power;
+        projectile.GetComponent<Rigidbody>().velocity = mouseDelta * power;
 		FollowCam.S.poi = projectile;
 		GameController.ShotFired();
 		//added code
@@ -128,5 +136,10 @@ public class Slingshot : MonoBehaviour {
 
     public Vector3 getVelocity(){
         return mouseDelta*power;
+    }
+
+    public void setPower()
+    {
+        power =sl.value;
     }
 }

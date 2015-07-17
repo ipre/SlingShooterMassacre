@@ -10,8 +10,8 @@ public class AutoDestroy : MonoBehaviour {
 	public AudioClip explosion;
 
 	//explosion
-	public float radius = 10.0f;
-	public float power = 600.0f;
+	public float radius = 15.0f;
+	public float power = 2700.0f;
 
 	void Awake () {
 		ps = GetComponent<ParticleSystem> ();
@@ -20,9 +20,12 @@ public class AutoDestroy : MonoBehaviour {
 
 		Collider[] colliders = Physics.OverlapSphere (transform.position, radius);
 		foreach (Collider hit in colliders) {
-			Rigidbody rbs = hit.GetComponent<Rigidbody> ();	
-			if (rbs != null)
-				rbs.AddExplosionForce (power, transform.position, radius, 3.0F);
+			Rigidbody rbs = hit.GetComponent<Rigidbody> ();
+            if (rbs != null)
+            {
+                rbs.isKinematic = false;
+                rbs.AddExplosionForce(power, transform.position, radius, 3.0F);
+            }
 		}
 	}
 

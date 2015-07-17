@@ -3,12 +3,14 @@ using System.Collections;
 
 public class AimSystem : MonoBehaviour {
 
-    public int numSteps=20;
-    //public Vector3 gravity = new Vector3(0.0f, -9.82f, 0.0f);
+    public int numSteps=100;
+    //why is gravity -10?
+    public Vector3 gravity = new Vector3(0.0f, -10.0f, 0.0f);
     public Transform initialPosition;
 
-    public void UpdateTraj(Vector3 initialVelocity,Vector3 initialPosition)
+    public void UpdateTraj(Vector3 initialVelocity,Vector3 initialPosition, float power)
     {
+        numSteps = (int)power*25;
         LineRenderer lr = GetComponent<LineRenderer>();
         lr.SetVertexCount(numSteps);
 
@@ -19,7 +21,7 @@ public class AimSystem : MonoBehaviour {
             lr.SetPosition(i, position);
 
             position += velocity * Time.fixedDeltaTime*3;
-            velocity += Physics.gravity * Time.fixedDeltaTime*3;
+            velocity += gravity * Time.fixedDeltaTime*3;
         }
     }
  
